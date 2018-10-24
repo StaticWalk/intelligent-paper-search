@@ -11,7 +11,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 
 @NodeEntity
 @Data
-public class genre extends BaseEntity {
+public class Genre extends BaseEntity {
 
 	private Long id;
 	private String type;

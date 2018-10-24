@@ -11,7 +11,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 
 @NodeEntity
 @Data
-public class meeting extends BaseEntity{
+public class Meeting extends BaseEntity{
 
 	private Long id;
 	private String location;
