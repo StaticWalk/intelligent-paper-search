@@ -27,5 +27,8 @@ public class Author extends BaseEntity{
 	@JsonProperty("创作")
 	private List<Paper> papers;
 
+	@Relationship(type = "belongTo")
+	@JsonProperty("属于")
+	private List<Origination> originations;
 
 }

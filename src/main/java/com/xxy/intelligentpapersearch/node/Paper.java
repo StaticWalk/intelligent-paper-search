@@ -1,7 +1,11 @@
 package com.xxy.intelligentpapersearch.node;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+
+import java.util.List;
 
 /**
  * Created by xiongxiaoyu
@@ -18,7 +22,14 @@ public class Paper extends BaseEntity {
 	private String  document_id;
 	private String  publisher;
 	private String  publication_date;
-//	private String  abstract;  todo
-
+	private String  summary;
 	private String  keywords;
+
+	@Relationship(type = "classify")
+	@JsonProperty("归类")
+	private List<Genre> genres;
+
+	@Relationship(type = "participate")
+	@JsonProperty("参加")
+	private List<Meeting> meetings;
 }
