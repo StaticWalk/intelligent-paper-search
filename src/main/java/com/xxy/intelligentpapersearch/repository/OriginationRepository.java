@@ -9,4 +9,5 @@ import org.springframework.data.neo4j.repository.GraphRepository;
  * Time:21:34
  */
 public interface OriginationRepository extends GraphRepository<Origination>{
+
 }
