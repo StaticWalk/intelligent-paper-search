@@ -23,7 +23,6 @@ public class Paper extends BaseEntity {
 	private String  publisher;
 	private String  publication_date;
 	private String  summary;
-	private String  keywords;
 
 	@Relationship(type = "classify")
 	@JsonProperty("归类")
@@ -32,4 +31,9 @@ public class Paper extends BaseEntity {
 	@Relationship(type = "participate")
 	@JsonProperty("参加")
 	private List<Meeting> meetings;
+
+		@Relationship(type = "attribute")
+	@JsonProperty("属于")
+	private List<Keyword> keywords;
+
 }
