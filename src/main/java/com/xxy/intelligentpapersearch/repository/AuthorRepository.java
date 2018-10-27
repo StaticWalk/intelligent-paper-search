@@ -2,6 +2,9 @@ package com.xxy.intelligentpapersearch.repository;
 
 import com.xxy.intelligentpapersearch.node.Author;
 import org.springframework.data.neo4j.repository.GraphRepository;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 /**
  * Created by xiongxiaoyu
@@ -9,4 +12,6 @@ import org.springframework.data.neo4j.repository.GraphRepository;
  * Time:21:27
  */
 public interface AuthorRepository extends GraphRepository<Author> {
+
+	List<Author> findByName(@Param("name") String name);
 }

@@ -6,4 +6,6 @@ package com.xxy.intelligentpapersearch.service;
  * Time:12:51
  */
 public interface PaperService {
+
+
 }
