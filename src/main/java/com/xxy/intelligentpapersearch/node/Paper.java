@@ -2,6 +2,7 @@ package com.xxy.intelligentpapersearch.node;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
@@ -17,7 +18,9 @@ import java.util.List;
 @Data
 public class Paper extends BaseEntity {
 
+	@GraphId
 	private Long id;
+	private String  name;
 	private String  doi;
 	private String  document_id;
 	private String  publisher;
@@ -32,7 +35,7 @@ public class Paper extends BaseEntity {
 	@JsonProperty("参加")
 	private List<Meeting> meetings;
 
-		@Relationship(type = "attribute")
+	@Relationship(type = "attribute")
 	@JsonProperty("属于")
 	private List<Keyword> keywords;
 

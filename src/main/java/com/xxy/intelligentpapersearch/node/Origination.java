@@ -1,6 +1,7 @@
 package com.xxy.intelligentpapersearch.node;
 
 import lombok.Data;
+import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 /**
@@ -13,6 +14,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 @Data
 public class Origination extends BaseEntity{
 
+	@GraphId
 	private int id;
 	private String  name;
 	private String  location;
