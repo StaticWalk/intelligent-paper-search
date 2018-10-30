@@ -2,7 +2,6 @@ package com.xxy.intelligentpapersearch.repository;
 
 import com.xxy.intelligentpapersearch.IntelligentPaperSearchApplication;
 import com.xxy.intelligentpapersearch.node.Author;
-import com.xxy.intelligentpapersearch.node.Keyword;
 import com.xxy.intelligentpapersearch.node.Paper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,15 +32,17 @@ public class RepositoriesTest {
 
 	@Test
 	public void Author_FBName_test(){
-//		List<Author> a=authorRepository.findByName("xiongxiaoyu");
-		List<Author> a=authorRepository.findByBirth("1949");
+
+		//fingby其实是固定的cypher，需要使用自定义的才行，查不出来
+		List<Author> a=authorRepository.findByAuthorName("xiongxiaoyu");
+//		List<Author> a=authorRepository.findByBirth("1949");
 		System.err.println(a);
 	}
 
 	@Test
 	public void Paper_FBProperties_test(){
 		//测试能否拿到级联属性的数据，开始发现不能获取级联数据，结果是服务器数据库没导入
-//		List<Paper> a=paperRepository.findByDoi("https://doi.org/10.2118/76-04-03");
+//		List<Paper> a=paperRepository.findByKeywords("Oklahoma");
 		List<Paper> a=paperRepository.findByName("Hydraulic Fracturing-New Developments");
 		System.err.println(a);
 	}
@@ -50,7 +51,8 @@ public class RepositoriesTest {
 	@Test
 	public void Paper_FBKeywords_test(){
 		//通过关键词拿到匹配的Paper
-		List<Keyword> a=keywordRepoitory.findByName("Oklahoma");
+//		List<Paper> a=keywordRepoitory.getPaperTiles();
+		List<Paper> a=keywordRepoitory.findByName("Duncan");
 		System.err.println(a);
 	}
 

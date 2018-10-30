@@ -1,6 +1,7 @@
 package com.xxy.intelligentpapersearch.repository;
 
 import com.xxy.intelligentpapersearch.node.Paper;
+import org.springframework.data.neo4j.annotation.Query;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,8 @@ public interface PaperRepository extends GraphRepository<Paper>{
 
 	List<Paper> findByName(@Param("name") String name);
 
-	List<Paper> findByDoi(@Param("doi") String doi);
+
+	@Query("start k:Keyword{name:{0}} match (p:Paper)-[r:attribute]->k return p ")
+	List<Paper> findByKeywords(String keyword);
 
 }

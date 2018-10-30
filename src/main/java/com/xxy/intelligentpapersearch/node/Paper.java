@@ -26,6 +26,7 @@ public class Paper extends BaseEntity {
 	private String  publisher;
 	private String  publication_date;
 	private String  summary;
+	private String  introduce;
 
 	@Relationship(type = "classify")
 	@JsonProperty("归类")

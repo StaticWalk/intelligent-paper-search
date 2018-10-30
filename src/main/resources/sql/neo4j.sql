@@ -8,7 +8,7 @@ merge(p:Author{id:toInteger(line.id),name:line.name,email:line.email,birth:line.
 /*将paper.csv引入到neo4j中，在Neo4j中创建Paper节点*/
 load csv with headers from "file:///paper.csv" as line
 merge(p:Paper{id:toInteger(line.id),name:line.name,doi:line.doi,document_id:line.document_id,publisher:line.publisher,
-publication_date:line.publication_date,introduction:line.introduction});
+publication_date:line.publication_date,summary:line.summary,introduction:line.introduction});
 
 
 /*将keyword.csv引入到neo4j中，在Neo4j中创建Keyword节点**/
