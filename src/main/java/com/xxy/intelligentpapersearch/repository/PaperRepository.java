@@ -17,10 +17,15 @@ import java.util.List;
 @Repository
 public interface PaperRepository extends GraphRepository<Paper>{
 
+
 	List<Paper> findByName(@Param("name") String name);
 
+	// @Query("MATCH (n:Author) WHERE n.name ={0} WITH n MATCH p=(n)-[*0..1]-(m) RETURN n,m")
+	@Query("MATCH (n:Author)-[r:create]->(m:Paper) n.name ={0} RETURN n,m")
+	List<Paper> findPaperByAuthorName(String name);
 
-	@Query("start k:Keyword{name:{0}} match (p:Paper)-[r:attribute]->k return p ")
-	List<Paper> findByKeywords(String keyword);
+
+	@Query("match (n:Paper)-[:attribute]->(m:Keyword) where m.name={0} return n")
+	List<Paper> findPaperByKeyword(String name);
 
 }

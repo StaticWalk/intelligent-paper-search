@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>石油论文智能分析问答系统</title>
+</head>
+<style type="text/css">
+    li{
+        list-style: none;
+    }
+
+    #content, #msg_input, #sendbtn{
+        margin: auto;
+        position: relative;
+        left: 0;
+        right: 0;
+    }
+    #content, #msg_input,#content .left ,#content .right{
+         width: 400px;
+     }
+    #sendbtn{
+          width:60px;
+          text-align: center;
+      }
+    #msg_input, #sendbtn{
+        display: block;
+        position: relative;
+        left: 20px;
+    }
+
+    #content .left ,#content .right{
+        padding: 5px 10px;
+    }
+    #content .left{
+        text-align: left;
+    }
+    #content .right{
+        text-align: right;
+    }
+    .right{
+        float: right;
+    }
+    .left{
+        float: left;
+    }
+</style>
+<body>
+<div id="mian" class="main">
+    <ul id="content" class="content">
+        <li class="msgContent left">  老板你好 </li>
+        <div style="clear: both"></div>
+    </ul>
+    <textarea id="msg_input" class="msgInput"></textarea>
+    <button id="sendbtn" class="sendbtn">发送</button>
+</div>
+
+</body>
+
+<script type="text/javascript">
+    window.onload = function(){
+
+        var input = document.getElementById("msg_input");//查找缓存
+        document.getElementById("sendbtn").onclick = function() {
+            sendMsg();
+        }
+
+        document.onkeypress = function (ev) {
+            var e = ev || window.event;
+            var keycode = e.keyCode || e.which;
+            console.log(e)
+            if (keycode ==13){
+                //按下enter键
+                sendMsg();
+            }
+        }
+
+        function sendMsg() {
+            var input = document.getElementById("msg_input");
+            var ul=document.getElementById("content");
+
+            var newLi= document.createElement("li")
+            newLi.innerHTML = input.value;
+            newLi.className = 'msgContent right';
+            ul.appendChild(newLi);
+
+            var div = document.createElement("div");
+            div.style = 'clear:both';
+            ul.appendChild(div);
+
+
+            ajax({
+                url : "/question/query?question=" + input.value,
+                success : function (res) {
+                    console.log(res);
+                    var newLi = document.createElement('li');
+                    newLi.innerHTML = res;
+                    newLi.className = 'msgContent left'
+                    ul.appendChild(newLi);
+
+                    var div = document.createElement('div');
+                    div.style = 'clear:both';
+                    ul.appendChild(div);
+                    input.value = '';
+                    newLi.scrollIntoView();//将元素滚动到可见位置
+                    }
+                })
+            input.value = '';
+            newLi.scrollIntoView();
+        }
+
+    }
+
+    function ajax(obj) {
+        var xhr = null;
+        if (window.ActiveXObject) {
+            xhr = new ActiveXObject('Microsoft.XMLHTTP')
+        } else {
+            xhr = new XMLHttpRequest();
+        }
+
+        //打开与服务器的连接
+        if (obj.method) {
+            xhr.open(obj.method, obj.url, true);
+        } else {
+            xhr.open('get', obj.url, true);
+        }
+        xhr.setRequestHeader("Content-Type",
+            "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("Authorization",
+            "APPCODE 3e9dfb924f464e9593a95f9d2bbf4348")
+
+        xhr.onreadystatechange = function() {
+
+            if (xhr.readyState == 4) {
+                //数据接收完毕
+                if (xhr.status == 200) {
+                    //console.log('请求成功',xhr.responseText)
+                    if (obj.success) {
+                        obj.success(xhr.responseText)
+                    }
+
+                } else {
+                    //console.log(xhr.status,'请求出错')
+                    if (obj.failure) {
+                        obj.failure('请求失败')
+                    }
+                }
+            }
+        }
+        if (obj.method == undefined || obj.method.toLowerCase() == 'get') {
+            xhr.send(null);
+        } else {
+            xhr.send(obj.params);
+
+        }
+
+    }
+
+
+</script>
+</html>
