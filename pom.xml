@@ -40,6 +40,23 @@
 			<scope>test</scope>
 		</dependency>
 
+
+		<!--OpenNLP tools-->
+		<dependency>
+			<groupId>org.apache.opennlp</groupId>
+			<artifactId>opennlp-tools</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+
+
+		<!--OpenNLP UIMA Annotators-->
+		<dependency>
+			<groupId>org.apache.opennlp</groupId>
+			<artifactId>opennlp-uima</artifactId>
+			<version>1.6.0</version>
+		</dependency>
+
+
 		<!-- 添加thymeleaf 支持页面跳转 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

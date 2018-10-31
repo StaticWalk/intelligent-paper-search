@@ -1,6 +1,6 @@
 intelligent-paper-search  
 ---  
-Spring-Boot + Neo4j + Spark的朴素贝叶斯分类器实现石油相关论文的智能分析问答系统  
+Spring-Boot + OpenNLP + Neo4j + Spark的朴素贝叶斯分类器实现石油相关论文的智能分析问答系统  
 ---
 #### 写在前面  
 打算仿照[Spring-Boot-Neo4j-Movies](https://github.com/kobeyk/Spring-Boot-Neo4j-Movies)做一个基于石油相关论文的智能分析系统。
@@ -19,5 +19,12 @@ Spring-Boot + Neo4j + Spark的朴素贝叶斯分类器实现石油相关论文�
 2.问题归类，英语比较吃力了，同样的一个问题怎么来问，同一个问题预设问法越多，模型在学习后识别同类问题的准确率才会更高。   
 3.。。。
 
+   
+###### 10.31更新  
+已完成工作量：数据模拟、cypher查询、index.html、questionService   
+在做句子抽象化这里，两个点：人名识别、关键词识别。运气比较好，先做的人名识别。最开始以为要自己准备一个词汇库，在网上找资料，发现
+了ner(named entity recognition),然后延申到机器学习的NLP,发现了很多成型的nlp项目(英文和国内的汉语都有)而且可以直接使用的。随便
+挑选了apache的opennlp拿来做人名识别。
+ 
 
 

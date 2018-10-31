@@ -5,6 +5,7 @@ import com.xxy.intelligentpapersearch.repository.KeywordRepoitory;
 import com.xxy.intelligentpapersearch.repository.PaperRepository;
 import com.xxy.intelligentpapersearch.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,16 @@ import org.springframework.stereotype.Service;
 @Service
 @Primary
 public class QuestionServiceImpl implements QuestionService {
+
+
+	@Value("${paperKeywordDictPath}")
+	private String paperKeywordDictPath;
+
+	@Value("${authorNameDictPath}")
+	private String authorNameDictPath;
+
+
+//	private String
 
 
 	@Autowired
@@ -41,7 +52,14 @@ public class QuestionServiceImpl implements QuestionService {
 		 *
 		 * 测试简化：
 		 *
+		 *						   paperKeyword.txt		authorName.txt
+		 * 	 vocabulary classify: paperKeyword->pkw    authorName->atn
+		 *   eg:
+		 *   abstract:
+		 *
 		 */
+		String  eg = "what is you name";
+		String[] a = eg.split(" ");
 
 
 
