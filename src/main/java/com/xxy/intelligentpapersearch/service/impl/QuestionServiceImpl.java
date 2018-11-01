@@ -1,5 +1,6 @@
 package com.xxy.intelligentpapersearch.service.impl;
 
+import com.xxy.intelligentpapersearch.process.ModelProcess;
 import com.xxy.intelligentpapersearch.repository.AuthorRepository;
 import com.xxy.intelligentpapersearch.repository.KeywordRepoitory;
 import com.xxy.intelligentpapersearch.repository.PaperRepository;
@@ -59,7 +60,13 @@ public class QuestionServiceImpl implements QuestionService {
 		 *
 		 */
 		String  eg = "what is you name";
-		String[] a = eg.split(" ");
+//		String[] a = eg.split(" ");
+		ModelProcess modelProcess = new ModelProcess();
+		modelProcess.analyQuery(eg);
+
+
+
+
 
 
 

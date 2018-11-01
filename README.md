@@ -24,7 +24,7 @@ Spring-Boot + OpenNLP + Neo4j + Spark的朴素贝叶斯分类器实现石油相�
 已完成工作量：数据模拟、cypher查询、index.html、questionService   
 在做句子抽象化这里，两个点：人名识别、关键词识别。运气比较好，先做的人名识别。最开始以为要自己准备一个词汇库，在网上找资料，发现
 了ner(named entity recognition),然后延申到机器学习的NLP,发现了很多成型的nlp项目(英文和国内的汉语都有)而且可以直接使用的。随便
-挑选了apache的opennlp拿来做人名识别。
+挑选了apache的OpenNLP拿来做人名识别。
  
 
 

@@ -22,15 +22,24 @@ import java.io.InputStream;
  */
 public class ModelProcessTest {
 
-	public static void main(String[] args) {
+
+	@Test
+	public void modelProcessTest() throws IOException {
 		ModelProcess a=new ModelProcess();
-		System.out.println(a.questionsPattern);
+//		System.out.println(a.questionsPattern);
+//		System.out.println(a.paperKeywordDict);
+
+		System.err.println(a.queryAbstract("my name is jacky   , helllo"));
 	}
+
+
+
 
 
 
 	@Test
 	public void SentenceDetect() throws IOException {
+		//长段落分句
 		String paragraph = "Hi. How are you? This is Mike.";
 
 		// always start with a model, a model is learned from training data
@@ -48,6 +57,7 @@ public class ModelProcessTest {
 
 	@Test
 	public void Tokenize() throws InvalidFormatException, IOException {
+		//句子分词
 		InputStream is = new FileInputStream("opennlp/en-token.bin");
 		TokenizerModel model = new TokenizerModel(is);
 		Tokenizer tokenizer = new TokenizerME(model);
@@ -58,19 +68,29 @@ public class ModelProcessTest {
 	}
 
 
+
+	@Test
+	public void stringTest(){
+		String a = "da svds ，。/ dbian somp,d a.";
+		//去掉中英文标点符号
+		System.out.println(a.replaceAll("[\\pP‘’“”]",""));
+
+	}
+
+
+
+
 	@Test
 	public void findPersonName() throws IOException {
-		InputStream is = new FileInputStream("opennlp/en-ner-person.bin");
 
+		//人名识别
+		InputStream is = new FileInputStream("opennlp/en-ner-person.bin");
 		TokenNameFinderModel model = new TokenNameFinderModel(is);
 		is.close();
-
 		NameFinderME nameFinder = new NameFinderME(model);
-
 		String []sentence = new String[]{
-				"is","a","Mike","Smith","good","Mike","person","Smith","Gerald","R. Coulter"
+				"is","a","Mike",",","Smith","good","Mike","person","Smith","Gerald","R. Coulter"
 		};
-
 		Span nameSpans[] = nameFinder.find(sentence);
 		for(Span s: nameSpans)
 				System.out.println(s.getStart()+ ""+s.length());
