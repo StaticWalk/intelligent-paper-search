@@ -29,11 +29,9 @@ public class ModelProcessTest {
 //		System.out.println(a.questionsPattern);
 //		System.out.println(a.paperKeywordDict);
 
-		System.err.println(a.queryAbstract("my name is jacky   , helllo"));
+		a.queryAbstract("my name is Smith Smith, happy");
+
 	}
-
-
-
 
 
 
@@ -71,9 +69,19 @@ public class ModelProcessTest {
 
 	@Test
 	public void stringTest(){
-		String a = "da svds ，。/ dbian somp,d a.";
+//		String a = "da svds ，。/ dbian somp,d a.";
+
+		String a = "my name is Smith Smith hello";
 		//去掉中英文标点符号
-		System.out.println(a.replaceAll("[\\pP‘’“”]",""));
+
+		a=a.replace("name","hhh");
+//		String[] aa=a.replaceAll("[\\pP‘’“”]","").split(" ");
+//		for (String s:aa){
+			System.out.println(a);
+//		}
+
+//		System.err.println(a);
+//		System.err.println(a.substring(0,a.length()-1));
 
 	}
 
