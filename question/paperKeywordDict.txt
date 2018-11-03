@@ -1,0 +1,4 @@
+0:oil
+1:Duncan
+2:Halliburton
+3:Oklahoma

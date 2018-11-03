@@ -7,13 +7,17 @@ import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.Span;
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.mllib.classification.NaiveBayes;
 import org.apache.spark.mllib.classification.NaiveBayesModel;
+import org.apache.spark.mllib.linalg.Vector;
+import org.apache.spark.mllib.linalg.Vectors;
+import org.apache.spark.mllib.regression.LabeledPoint;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.*;
 
 
 /**
@@ -40,10 +44,15 @@ public class ModelProcess {
 
 
 	/**
+	 * 词语和下标的对应表   == 词汇表
+	 */
+	Map<String, Integer> vocabulary;
+
+
+	/**
 	 * 论文关键词词汇表
 	 */
 	Map<Integer, String> paperKeywordDict;
-
 
 
 	/**
@@ -77,17 +86,21 @@ public class ModelProcess {
 	int modelIndex = 0;
 
 
-	public ModelProcess(){
+	public ModelProcess() throws IOException {
 		questionsPattern = loadQuestionsPattern();
+		vocabulary = loadVocabulary();
 		paperKeywordDict = loadPaperKeywordDict();
 		paperGenreDict = loadPaperGenreDict();
 		nbModel = loadClassifierModel();
 	}
 
 
+
+
 	public ModelProcess(String rootDirPath) throws Exception{
 		this.rootDirPath = rootDirPath;
 		questionsPattern = loadQuestionsPattern();
+		vocabulary = loadVocabulary();
 		paperGenreDict = loadPaperGenreDict();
 		paperKeywordDict = loadPaperKeywordDict();
 		nbModel = loadClassifierModel();
@@ -147,8 +160,8 @@ public class ModelProcess {
 		NameFinderME nameFinder = new NameFinderME(ner_model);
 		Tokenizer tokenizer = new TokenizerME(token_model);
 
-		//除去句子中所有类型的标点符号
-		querySentence = querySentence.replaceAll("[\\pP‘’“”]","");
+		//除去句子中所有类型的标点符号和 's
+		querySentence = querySentence.replace("'s","").replaceAll("[\\pP‘’“”]","");
 
 		String tokens [] =tokenizer.tokenize(querySentence);
 
@@ -171,8 +184,15 @@ public class ModelProcess {
 			abstrctWords.put(a.substring(0,a.length()-1),AbstractWordEnum.PERSONNAME);
 		}
 
+
+
+
 		//遍历当前数组，找出其他的信息词
 		for (String token : tokens){
+
+			//先把人名抽象出来，再将流程中使用到的word全部转成小写，避免格式原因大小写
+			token = token.toLowerCase();
+
 			if (paperKeywordDict.containsValue(token)){
 				abstrctWords.put(token,AbstractWordEnum.KEYWORD);
 			}
@@ -181,24 +201,109 @@ public class ModelProcess {
 			}
 
 			/**
-			 * else if()
-			 * 这里补充其他信息词汇的查询
+			 * todo
+			 * 通过添加else if()
+			 * 在这里补充其他信息词汇的查询
 			 */
 		}
 
 		//拿到所有可以抽象的词abstractWords,然后对原始句子进行抽象
-		for (Map.Entry<String,AbstractWordEnum> entry:abstrctWords.entrySet()){
+		for (Map.Entry<String,AbstractWordEnum> entry : abstrctWords.entrySet()){
 					querySentence = querySentence.replace(entry.getKey(),entry.getValue().getNature());
 		}
 
 		return querySentence;
 	}
 
+	/**
+	 *
+	 * @param sentence
+	 * @return
+	 * @throws IOException
+	 *
+	 * 语句分词后生成向量
+	 */
+	public double[] sentenceToArrays(String sentence) throws IOException {
+
+		/**
+		 * 引入训练英文分词训练集，使用openNLP的Tokenizer分词
+		 */
+		InputStream is = new FileInputStream("opennlp/en-token.bin");
+		TokenizerModel model = new TokenizerModel(is);
+		is.close();
+
+		double[] vector = new double[vocabulary.size()];
+
+		/**
+		 * 模板对照词汇表的大小初始化，全部为0
+		 */
+		for (int i = 0; i < vocabulary.size(); i++) {
+			vector[i] = 0;
+		}
+
+		Tokenizer tokenizer = new TokenizerME(model);
+		String tokens[] = tokenizer.tokenize(sentence);
+		for (String token:tokens){
+			if (vocabulary.containsKey(token)) {
+				int index = vocabulary.get(token);
+				vector[index] = 1;
+			}
+		}
+
+//		for (int i = 0; i < vector.length; i++) {
+//			System.err.print(vector[i] + " ");
+//		}
+//		System.err.println();
+
+		return vector;
+
+	}
+
+
+	private Map<String,Integer> loadVocabulary() {
+
+		Map<String, Integer> vocabulary = new HashMap();
+		File file = new File(rootDirPath + "/question/vocabulary.txt");
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		String line;
+		try {
+			while ((line = br.readLine()) != null) {
+				String[] tokens = line.split(":");
+				int index = Integer.parseInt(tokens[0]);
+				String word = tokens[1];
+				vocabulary.put(word, index);
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return vocabulary;
+	}
 
 
 
-	public String queryClassify(String abstr) {
-		return null;
+	public String queryClassify(String abstr) throws IOException {
+
+		double[] testArray = sentenceToArrays(abstr);
+		Vector v = Vectors.dense(testArray);
+
+		/**
+		 * 对数据进行预测
+		 * 获取在spark分类器中的索引
+		 * 推断出句子使用的模板
+		 */
+		double index = nbModel.predict(v);
+		modelIndex = (int)index;
+		System.out.println("the model index is " + modelIndex);
+		System.out.println(nbModel.predictProbabilities(v));
+
+		return questionsPattern.get(index);
 	}
 	
 	
@@ -208,15 +313,103 @@ public class ModelProcess {
 	}
 	
 	
-	public NaiveBayesModel loadClassifierModel() {
+	public NaiveBayesModel loadClassifierModel() throws IOException {
 
-		return null;
+		/**
+		 * 生成Spark对象
+		 * 一、Spark程序是通过SparkContext发布到集群上？？
+		 * Spark程序的运行都是在SparkContext为核心的调度器的指挥下进行的
+		 * Spark程序的运行都是以SparkContext结束作为结束
+		 * JavaSparkContext对象用来创建Spark的核心RDD的
+		 * 首个RDD需要由SparkContext来构建
+		 *
+		 * 二、SparkContext的主构造器参数是SparkConf
+		 * SparkConf必须设置appname和master，否则会报错
+		 * spark.master   用于设置部署模式
+		 * local[*] == 本地运行模式[也可以是集群的形式]，如果需要多个线程执行，可以设置为local[2],表示2个线程 ，*表示多个
+		 */
+
+		SparkConf conf = new SparkConf().setAppName("NaiveBayesTest").setMaster("local[*]");
+		JavaSparkContext sc = new JavaSparkContext(conf);
+
+		List<LabeledPoint> train_list = new LinkedList<LabeledPoint>();
+		String[] sentences = null;
+
+		/**
+		 * 0.0： nm papers
+		 */
+		String nmPapersQuestions = loadFile("/question/[0]nm_papers.txt");
+		sentences = nmPapersQuestions.split("`");
+
+		for (String sentence : sentences) {
+			System.err.println(sentence);
+			double[] array = sentenceToArrays(sentence);
+			LabeledPoint train_one = new LabeledPoint(0.0, Vectors.dense(array));
+			train_list.add(train_one);
+		}
+
+		/**
+		 *  1.0: kw papers
+		 */
+		String kwPapersQuestions = loadFile("/question/[1]kw_papers.txt");
+		sentences = kwPapersQuestions.split("`");
+
+		for (String sentence : sentences) {
+			System.err.println(sentence);
+			double[] array = sentenceToArrays(sentence);
+			LabeledPoint train_two = new LabeledPoint(1.0, Vectors.dense(array));
+			train_list.add(train_two);
+		}
+
+		/**
+		 * todo  继续添加其他问题模板
+		 * 2.0:
+		 */
+
+		/**
+		 * SPARK的核心是RDD(弹性分布式数据集)
+		 * Spark是Scala写的,JavaRDD就是Spark为Java写的一套API
+		 * JavaSparkContext sc = new JavaSparkContext(sparkConf);    //对应JavaRDD
+		 * SparkContext	    sc = new SparkContext(sparkConf)    ;    //对应RDD
+		 */
+		JavaRDD<LabeledPoint> trainingRDD = sc.parallelize(train_list);
+		NaiveBayesModel nb_model = NaiveBayes.train(trainingRDD.rdd());
+
+		/**
+		 * 记得关闭资源
+		 */
+		sc.close();
+
+		/**
+		 * 返回贝叶斯分类器
+		 */
+		return nb_model;
+
+	}
+
+	private String loadFile(String filename) throws IOException {
+		File file = new File(rootDirPath + filename);
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String content = "";
+		String line;
+		while ((line = br.readLine()) != null){
+			/**
+			 * 暂时替代换行符 "~"
+			 */
+			content += line + "`";
+		}
+
+		/**
+		 * 关闭资源
+		 */
+		br.close();
+		return content;
 	}
 
 
 	public Map<Double,String> loadQuestionsPattern() {
 		Map<Double,String>  questionPattern = new HashMap<>();
-		File file = new File(rootDirPath + "/question/paperKeywordDict.txt");
+		File file = new File(rootDirPath + "/question/questionClassification.txt");
 		BufferedReader br = null;
 		try{
 			br = new BufferedReader(new FileReader(file));

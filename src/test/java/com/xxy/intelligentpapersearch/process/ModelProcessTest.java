@@ -29,7 +29,10 @@ public class ModelProcessTest {
 //		System.out.println(a.questionsPattern);
 //		System.out.println(a.paperKeywordDict);
 
-		a.queryAbstract("my name is Smith Smith, happy");
+//		System.err.println(a.queryAbstract("my name is Smith Smith, happy"));
+
+//		a.analyQuery("what");
+		a.analyQuery("what are the papers related to kw");
 
 	}
 
@@ -59,7 +62,7 @@ public class ModelProcessTest {
 		InputStream is = new FileInputStream("opennlp/en-token.bin");
 		TokenizerModel model = new TokenizerModel(is);
 		Tokenizer tokenizer = new TokenizerME(model);
-		String tokens[] = tokenizer.tokenize("Hi. How are you? This is Mike.");
+		String tokens[] = tokenizer.tokenize("What are Jay Chou's papers?");
 		for (String a : tokens)
 			System.out.println(a);
 		is.close();
@@ -71,10 +74,12 @@ public class ModelProcessTest {
 	public void stringTest(){
 //		String a = "da svds ，。/ dbian somp,d a.";
 
-		String a = "my name is Smith Smith hello";
+
+		// 's先分词
+		String a = "What are Jay Chou's papers?";
 		//去掉中英文标点符号
 
-		a=a.replace("name","hhh");
+		a=a.replaceAll("[\\pP‘’“”]","");
 //		String[] aa=a.replaceAll("[\\pP‘’“”]","").split(" ");
 //		for (String s:aa){
 			System.out.println(a);

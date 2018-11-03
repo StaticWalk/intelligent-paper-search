@@ -1,0 +1,8 @@
+2018-10-30 11:28:17,823 INFO (StartupInfoLogger.java:48)- Starting RepositoriesTest on DESKTOP-409V92T with PID 7540 (started by xiongxiaoyu in D:\intelligent-paper-search)
+2018-10-30 11:28:17,826 DEBUG (StartupInfoLogger.java:51)- Running with Spring Boot v1.5.9.RELEASE, Spring v4.3.13.RELEASE
+2018-10-30 11:28:17,828 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-10-30 11:28:23,965 INFO (StartupInfoLogger.java:57)- Started RepositoriesTest in 6.525 seconds (JVM running for 7.91)
+2018-10-30 11:29:54,871 INFO (StartupInfoLogger.java:48)- Starting RepositoriesTest on DESKTOP-409V92T with PID 10720 (started by xiongxiaoyu in D:\intelligent-paper-search)
+2018-10-30 11:29:54,875 DEBUG (StartupInfoLogger.java:51)- Running with Spring Boot v1.5.9.RELEASE, Spring v4.3.13.RELEASE
+2018-10-30 11:29:54,875 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-10-30 11:30:00,213 INFO (StartupInfoLogger.java:57)- Started RepositoriesTest in 5.627 seconds (JVM running for 7.073)
