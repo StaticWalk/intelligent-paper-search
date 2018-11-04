@@ -23,7 +23,7 @@ public class PaperController {
 	@RequestMapping("/query")
 	@ResponseBody
 	public String query(@RequestParam(value = "question") String question) throws Exception {
-		//todo analysis
+
 		String a = questionService.answer(question);
 
 		return a;

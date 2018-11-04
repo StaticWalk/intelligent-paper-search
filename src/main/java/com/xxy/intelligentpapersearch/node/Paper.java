@@ -40,4 +40,18 @@ public class Paper extends BaseEntity {
 	@JsonProperty("属于")
 	private List<Keyword> keywords;
 
+	@Override
+	public String toString() {
+		return "{" +
+				"\n name:" + name +
+				"\n doi:" + doi +
+				"\n document_id:" + document_id +
+				"\n publisher:" + publisher +
+				"\n publication_date:" + publication_date +
+				"\n summary:" + summary +
+				"\n introduce:" + introduce +
+				"\n }";
+	}
+
+
 }

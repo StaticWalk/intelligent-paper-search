@@ -1,8 +1,104 @@
-2018-10-30 11:28:17,823 INFO (StartupInfoLogger.java:48)- Starting RepositoriesTest on DESKTOP-409V92T with PID 7540 (started by xiongxiaoyu in D:\intelligent-paper-search)
-2018-10-30 11:28:17,826 DEBUG (StartupInfoLogger.java:51)- Running with Spring Boot v1.5.9.RELEASE, Spring v4.3.13.RELEASE
-2018-10-30 11:28:17,828 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
-2018-10-30 11:28:23,965 INFO (StartupInfoLogger.java:57)- Started RepositoriesTest in 6.525 seconds (JVM running for 7.91)
-2018-10-30 11:29:54,871 INFO (StartupInfoLogger.java:48)- Starting RepositoriesTest on DESKTOP-409V92T with PID 10720 (started by xiongxiaoyu in D:\intelligent-paper-search)
-2018-10-30 11:29:54,875 DEBUG (StartupInfoLogger.java:51)- Running with Spring Boot v1.5.9.RELEASE, Spring v4.3.13.RELEASE
-2018-10-30 11:29:54,875 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
-2018-10-30 11:30:00,213 INFO (StartupInfoLogger.java:57)- Started RepositoriesTest in 5.627 seconds (JVM running for 7.073)
+2018-11-04 15:45:26,582 INFO (StartupInfoLogger.java:48)- Starting IntelligentPaperSearchApplication on DESKTOP-409V92T with PID 9688 (D:\intelligent-paper-search\target\classes started by xiongxiaoyu in D:\intelligent-paper-search)
+2018-11-04 15:45:26,592 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-11-04 15:45:29,783 INFO (StartupInfoLogger.java:57)- Started IntelligentPaperSearchApplication in 3.671 seconds (JVM running for 6.217)
+2018-11-04 15:46:03,741 INFO (ModelProcess.java:118)- 原始句子：What are Jay Chou's papers
+2018-11-04 15:46:04,448 INFO (ModelProcess.java:124)- 句子抽象化结果：What are nm papers
+2018-11-04 15:46:04,526 INFO (ModelProcess.java:335)- the model index is 0
+2018-11-04 15:46:04,529 INFO (ModelProcess.java:336)- [0.9134980988593158,0.08650190114068432]
+2018-11-04 15:46:04,529 INFO (ModelProcess.java:130)- 句子套用模板结果：nm papers
+2018-11-04 15:46:04,529 INFO (ModelProcess.java:136)- 原始句子替换成系统可识别的结果：Jay Chou papers
+2018-11-04 15:46:04,529 INFO (ModelProcess.java:172)- resultList: [0, Jay Chou, papers]
+2018-11-04 15:46:05,873 INFO (QuestionServiceImpl.java:99)- [Paper(id=123, name=Hydraulic Fracturing-New Developments, doi=https://doi.org/10.2118/76-04-03, document_id=PETSOC-76-04-03, publisher=Petroleum Society of Canada, publication_date=1976, summary=This paper discusses the theory of hydraulic fracturing and the new developments in fracturing fluids and fracturing techniques which are continuing to make fracturing n important production tool. , introduce=null, genres=null, meetings=null, keywords=null)]
+2018-11-04 16:11:11,344 INFO (StartupInfoLogger.java:48)- Starting IntelligentPaperSearchApplication on DESKTOP-409V92T with PID 12452 (D:\intelligent-paper-search\target\classes started by xiongxiaoyu in D:\intelligent-paper-search)
+2018-11-04 16:11:11,347 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-11-04 16:11:15,183 INFO (StartupInfoLogger.java:57)- Started IntelligentPaperSearchApplication in 4.368 seconds (JVM running for 7.102)
+2018-11-04 16:11:30,320 INFO (ModelProcess.java:118)- Original statement：What are Jay Chou's papers
+2018-11-04 16:11:30,925 INFO (ModelProcess.java:124)- Sentence abstraction result：What are nm papers
+2018-11-04 16:11:30,995 INFO (ModelProcess.java:334)- the model index is 0
+2018-11-04 16:11:30,997 INFO (ModelProcess.java:335)- [0.9134980988593158,0.08650190114068432]
+2018-11-04 16:11:30,997 INFO (ModelProcess.java:130)- Sentence template results：nm papers
+2018-11-04 16:11:30,998 INFO (ModelProcess.java:136)- System-recognizable result：Jay Chou papers
+2018-11-04 16:11:30,998 INFO (ModelProcess.java:171)- resultList: [0, Jay Chou, papers]
+2018-11-04 16:11:32,649 INFO (QuestionServiceImpl.java:99)- [{name='Hydraulic Fracturing-New Developments', doi='https://doi.org/10.2118/76-04-03', document_id='PETSOC-76-04-03', publisher='Petroleum Society of Canada', publication_date='1976', summary='This paper discusses the theory of hydraulic fracturing and the new developments in fracturing fluids and fracturing techniques which are continuing to make fracturing n important production tool. ', introduce='null'}]
+2018-11-04 16:12:33,545 INFO (StartupInfoLogger.java:48)- Starting IntelligentPaperSearchApplication on DESKTOP-409V92T with PID 16220 (D:\intelligent-paper-search\target\classes started by xiongxiaoyu in D:\intelligent-paper-search)
+2018-11-04 16:12:33,548 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-11-04 16:12:36,763 INFO (StartupInfoLogger.java:57)- Started IntelligentPaperSearchApplication in 3.523 seconds (JVM running for 6.115)
+2018-11-04 16:13:51,441 INFO (ModelProcess.java:118)- Original statement：What are Jay Chou's papers
+2018-11-04 16:13:52,049 INFO (ModelProcess.java:124)- Sentence abstraction result：What are nm papers
+2018-11-04 16:13:52,152 INFO (ModelProcess.java:334)- the model index is 0
+2018-11-04 16:13:52,155 INFO (ModelProcess.java:335)- [0.9134980988593158,0.08650190114068432]
+2018-11-04 16:13:52,155 INFO (ModelProcess.java:130)- Sentence template results：nm papers
+2018-11-04 16:13:52,155 INFO (ModelProcess.java:136)- System-recognizable result：Jay Chou papers
+2018-11-04 16:13:52,156 INFO (ModelProcess.java:171)- resultList: [0, Jay Chou, papers]
+2018-11-04 16:13:53,521 INFO (QuestionServiceImpl.java:99)- [{name:Hydraulic Fracturing-New Developments, doi:https://doi.org/10.2118/76-04-03, document_id:PETSOC-76-04-03, publisher:Petroleum Society of Canada, publication_date:1976, summary:This paper discusses the theory of hydraulic fracturing and the new developments in fracturing fluids and fracturing techniques which are continuing to make fracturing n important production tool. , introduce:null}]
+2018-11-04 16:14:36,751 INFO (StartupInfoLogger.java:48)- Starting IntelligentPaperSearchApplication on DESKTOP-409V92T with PID 15148 (D:\intelligent-paper-search\target\classes started by xiongxiaoyu in D:\intelligent-paper-search)
+2018-11-04 16:14:36,754 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-11-04 16:14:39,933 INFO (StartupInfoLogger.java:57)- Started IntelligentPaperSearchApplication in 3.478 seconds (JVM running for 6.222)
+2018-11-04 16:14:55,122 INFO (ModelProcess.java:118)- Original statement：What are Jay Chou's papers
+2018-11-04 16:14:55,728 INFO (ModelProcess.java:124)- Sentence abstraction result：What are nm papers
+2018-11-04 16:14:55,799 INFO (ModelProcess.java:334)- the model index is 0
+2018-11-04 16:14:55,801 INFO (ModelProcess.java:335)- [0.9134980988593158,0.08650190114068432]
+2018-11-04 16:14:55,806 INFO (ModelProcess.java:130)- Sentence template results：nm papers
+2018-11-04 16:14:55,806 INFO (ModelProcess.java:136)- System-recognizable result：Jay Chou papers
+2018-11-04 16:14:55,806 INFO (ModelProcess.java:171)- resultList: [0, Jay Chou, papers]
+2018-11-04 16:14:57,064 INFO (QuestionServiceImpl.java:99)- [{name:Hydraulic Fracturing-New Developments
+ doi:https://doi.org/10.2118/76-04-03
+ document_id:PETSOC-76-04-03
+ publisher:Petroleum Society of Canada
+ publication_date:1976
+ summary:This paper discusses the theory of hydraulic fracturing and the new developments in fracturing fluids and fracturing techniques which are continuing to make fracturing n important production tool. 
+ introduce:null}]
+2018-11-04 16:16:07,779 INFO (StartupInfoLogger.java:48)- Starting IntelligentPaperSearchApplication on DESKTOP-409V92T with PID 15356 (D:\intelligent-paper-search\target\classes started by xiongxiaoyu in D:\intelligent-paper-search)
+2018-11-04 16:16:07,782 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-11-04 16:16:10,916 INFO (StartupInfoLogger.java:57)- Started IntelligentPaperSearchApplication in 3.628 seconds (JVM running for 6.248)
+2018-11-04 16:16:28,736 INFO (ModelProcess.java:118)- Original statement：What are Jay Chou's papers
+2018-11-04 16:16:29,468 INFO (ModelProcess.java:124)- Sentence abstraction result：What are nm papers
+2018-11-04 16:16:29,538 INFO (ModelProcess.java:334)- the model index is 0
+2018-11-04 16:16:29,545 INFO (ModelProcess.java:335)- [0.9134980988593158,0.08650190114068432]
+2018-11-04 16:16:29,546 INFO (ModelProcess.java:130)- Sentence template results：nm papers
+2018-11-04 16:16:29,546 INFO (ModelProcess.java:136)- System-recognizable result：Jay Chou papers
+2018-11-04 16:16:29,546 INFO (ModelProcess.java:171)- resultList: [0, Jay Chou, papers]
+2018-11-04 16:16:30,816 INFO (QuestionServiceImpl.java:99)- [{
+ name:Hydraulic Fracturing-New Developments
+ doi:https://doi.org/10.2118/76-04-03
+ document_id:PETSOC-76-04-03
+ publisher:Petroleum Society of Canada
+ publication_date:1976
+ summary:This paper discusses the theory of hydraulic fracturing and the new developments in fracturing fluids and fracturing techniques which are continuing to make fracturing n important production tool. 
+ introduce:null
+ }]
+2018-11-04 16:17:07,155 INFO (ModelProcess.java:118)- Original statement：What are Jay Chou's papers
+2018-11-04 16:17:07,878 INFO (ModelProcess.java:124)- Sentence abstraction result：What are nm papers
+2018-11-04 16:17:07,944 INFO (ModelProcess.java:334)- the model index is 0
+2018-11-04 16:17:07,944 INFO (ModelProcess.java:335)- [0.9134980988593158,0.08650190114068432]
+2018-11-04 16:17:07,944 INFO (ModelProcess.java:130)- Sentence template results：nm papers
+2018-11-04 16:17:07,945 INFO (ModelProcess.java:136)- System-recognizable result：Jay Chou papers
+2018-11-04 16:17:07,945 INFO (ModelProcess.java:171)- resultList: [0, Jay Chou, papers]
+2018-11-04 16:17:07,961 INFO (QuestionServiceImpl.java:99)- [{
+ name:Hydraulic Fracturing-New Developments
+ doi:https://doi.org/10.2118/76-04-03
+ document_id:PETSOC-76-04-03
+ publisher:Petroleum Society of Canada
+ publication_date:1976
+ summary:This paper discusses the theory of hydraulic fracturing and the new developments in fracturing fluids and fracturing techniques which are continuing to make fracturing n important production tool. 
+ introduce:null
+ }]
+2018-11-04 16:17:50,888 INFO (StartupInfoLogger.java:48)- Starting IntelligentPaperSearchApplication on DESKTOP-409V92T with PID 12360 (D:\intelligent-paper-search\target\classes started by xiongxiaoyu in D:\intelligent-paper-search)
+2018-11-04 16:17:50,891 INFO (SpringApplication.java:593)- No active profile set, falling back to default profiles: default
+2018-11-04 16:17:54,480 INFO (StartupInfoLogger.java:57)- Started IntelligentPaperSearchApplication in 3.963 seconds (JVM running for 7.261)
+2018-11-04 16:18:10,276 INFO (ModelProcess.java:118)- Original statement：What are Jay Chou's papers
+2018-11-04 16:18:10,889 INFO (ModelProcess.java:124)- Sentence abstraction result：What are nm papers
+2018-11-04 16:18:10,964 INFO (ModelProcess.java:334)- the model index is 0
+2018-11-04 16:18:10,967 INFO (ModelProcess.java:335)- [0.9134980988593158,0.08650190114068432]
+2018-11-04 16:18:10,967 INFO (ModelProcess.java:130)- Sentence template results：nm papers
+2018-11-04 16:18:10,967 INFO (ModelProcess.java:136)- System-recognizable result：Jay Chou papers
+2018-11-04 16:18:10,968 INFO (ModelProcess.java:171)- resultList: [0, Jay Chou, papers]
+2018-11-04 16:18:12,605 INFO (QuestionServiceImpl.java:99)- [{
+ name:Hydraulic Fracturing-New Developments
+ doi:https://doi.org/10.2118/76-04-03
+ document_id:PETSOC-76-04-03
+ publisher:Petroleum Society of Canada
+ publication_date:1976
+ summary:This paper discusses the theory of hydraulic fracturing and the new developments in fracturing fluids and fracturing techniques which are continuing to make fracturing n important production tool. 
+ introduce:null
+ }]

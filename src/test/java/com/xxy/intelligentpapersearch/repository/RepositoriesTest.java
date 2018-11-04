@@ -47,9 +47,9 @@ public class RepositoriesTest {
 		//通过关键词拿到级联的paper
 //		List<Paper> a=paperRepository.findPaperByKeywords("Oklahoma");
 		//通过作者名字拿到paper
-//		List<Paper> a=paperRepository.findPaperByAuthorName("xiongxiaoyu");
+		List<Paper> a=paperRepository.findPaperByAuthorName("xiongxiaoyu");
 		//论文的name获取论文详细信息
-		List<Paper> a=paperRepository.findByName("Hydraulic Fracturing-New Developments");
+//		List<Paper> a=paperRepository.findByName("Hydraulic Fracturing-New Developments");
 		System.err.println(a);
 	}
 

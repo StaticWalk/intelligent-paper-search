@@ -15,6 +15,8 @@ import org.apache.spark.mllib.classification.NaiveBayesModel;
 import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.mllib.linalg.Vectors;
 import org.apache.spark.mllib.regression.LabeledPoint;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.*;
@@ -30,6 +32,7 @@ public class ModelProcess {
 	 * dict :  questionPattern paperKeyword  personName  问题模板个数个问题表
 	 */
 
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
 	 * Spark贝叶斯分类器
@@ -112,34 +115,60 @@ public class ModelProcess {
 	public ArrayList<String> analyQuery(String queryString) throws IOException {
 
 
-		System.out.println("原始句子："+queryString);
+		logger.info("Original statement："+queryString);
 
 		/**
-		 * 原始句子抽象化
+		 * 句子抽象化
 		 */
 		String abstr = queryAbstract(queryString);
-		System.out.println("句子抽象化结果："+abstr);
+		logger.info("Sentence abstraction result："+abstr);
 
 		/**
-		 * 抽象的句子拿来匹配训练集中模板，拿到句子模板
+		 * 抽象的句子匹配训练集中模板，得出句子所用的模板
 		 */
 		String strPatt = queryClassify(abstr);
-		System.out.println("句子套用模板结果："+strPatt);
-
+		logger.info("Sentence template results："+strPatt);
 
 		/**
 		 * 模板还原成句子
 		 */
 		String finalPattern = queryExtenstion(strPatt);
-		System.out.println("原始句子替换成系统可识别的结果："+finalPattern);
+		logger.info("System-recognizable result："+finalPattern);
 
 		ArrayList<String> resultList = new ArrayList<>();
 		resultList.add(String.valueOf(modelIndex));
+
+
+		/**
+		 * tips：系统可识别语句：Jay Chou papers  —>  nm  papers  需要把人名一次add到result 不然只能拿到Jay
+		 * 通过消除空格标记连词
+		 */
+		for (Map.Entry<String,AbstractWordEnum> entry : abstrctWords.entrySet()){
+			if (finalPattern.contains(entry.getKey())){
+				finalPattern = finalPattern.replace(entry.getKey(),entry.getKey().replace(" ",""));
+			}
+		}
+
 		String[] finalPattArray = finalPattern.split(" ");
 		for (String word : finalPattArray) {
+			/**
+			 * 将被标记的连词还原
+			 */
+			for (Map.Entry<String,AbstractWordEnum> entry : abstrctWords.entrySet()){
+				if (entry.getKey().replace(" ", "").equals(word)){
+					word = entry.getKey();
+				}
+			}
 			resultList.add(word);
 		}
-		System.err.println("resultList: " +resultList);
+
+		/**
+		 * 置空abstrctWords
+		 */
+		abstrctWords.clear();
+		abstrctWords = null;
+
+		logger.info("resultList: " +resultList);
 		return resultList;
 	}
 
@@ -302,8 +331,8 @@ public class ModelProcess {
 		 */
 		double index = nbModel.predict(v);
 		modelIndex = (int)index;
-		System.out.println("the model index is " + modelIndex);
-		System.out.println(nbModel.predictProbabilities(v));
+		logger.info("the model index is " + modelIndex);
+		logger.info(String.valueOf(nbModel.predictProbabilities(v)));
 
 		return questionsPattern.get(index);
 	}
@@ -325,11 +354,6 @@ public class ModelProcess {
 			}
 		}
 
-		/**
-		 * 置空abstrctWords
-		 */
-		abstrctWords.clear();
-		abstrctWords = null;
 		return  extendedsQuery;
 
 	}
@@ -364,11 +388,6 @@ public class ModelProcess {
 		sentences = nmPapersQuestions.split("`");
 		for (String sentence : sentences) {
 			double[] array = sentenceToArrays(sentence);
-
-//			for (int i = 0; i < array.length; i++) {
-//				System.out.print(array[i] + " ");
-//			}
-//			System.out.println();
 
 			LabeledPoint train_one = new LabeledPoint(0.0, Vectors.dense(array));
 			train_list.add(train_one);

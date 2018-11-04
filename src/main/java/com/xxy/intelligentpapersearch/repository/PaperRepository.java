@@ -21,7 +21,7 @@ public interface PaperRepository extends GraphRepository<Paper>{
 	List<Paper> findByName(@Param("name") String name);
 
 	// @Query("MATCH (n:Author) WHERE n.name ={0} WITH n MATCH p=(n)-[*0..1]-(m) RETURN n,m")
-	@Query("MATCH (n:Author)-[r:create]->(m:Paper) n.name ={0} RETURN n,m")
+	@Query("MATCH (n:Author)-[r:create]->(m:Paper) where n.name ={0} RETURN n,m;")
 	List<Paper> findPaperByAuthorName(String name);
 
 
