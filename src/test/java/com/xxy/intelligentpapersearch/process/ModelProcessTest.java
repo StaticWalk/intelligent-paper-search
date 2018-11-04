@@ -31,8 +31,16 @@ public class ModelProcessTest {
 
 //		System.err.println(a.queryAbstract("my name is Smith Smith, happy"));
 
-//		a.analyQuery("what");
-		a.analyQuery("what are the papers related to kw");
+
+//		for (Map.Entry<String,Integer> s : a.vocabulary.entrySet()){
+
+//			System.err.print(s.getKey());
+
+//			System.err.println(a.vocabulary.containsKey("past"));
+//			System.err.println(a.vocabulary.containsKey(s.getKey()));
+//		}
+
+		a.queryClassify("What are Jay Chou's papers");
 
 	}
 

@@ -128,13 +128,19 @@ public class ModelProcess {
 
 
 		/**
-		 * 模板还原成句子，此时问题已转换为我们熟悉的操作
-		 * todo
+		 * 模板还原成句子
 		 */
 		String finalPattern = queryExtenstion(strPatt);
 		System.out.println("原始句子替换成系统可识别的结果："+finalPattern);
 
-		return null;
+		ArrayList<String> resultList = new ArrayList<>();
+		resultList.add(String.valueOf(modelIndex));
+		String[] finalPattArray = finalPattern.split(" ");
+		for (String word : finalPattArray) {
+			resultList.add(word);
+		}
+		System.err.println("resultList: " +resultList);
+		return resultList;
 	}
 
 
@@ -183,8 +189,6 @@ public class ModelProcess {
 			}
 			abstrctWords.put(a.substring(0,a.length()-1),AbstractWordEnum.PERSONNAME);
 		}
-
-
 
 
 		//遍历当前数组，找出其他的信息词
@@ -241,6 +245,11 @@ public class ModelProcess {
 			vector[i] = 0;
 		}
 
+
+		/**
+		 * vocabulary中的每一列词不能重复或者有多余空格
+		 */
+
 		Tokenizer tokenizer = new TokenizerME(model);
 		String tokens[] = tokenizer.tokenize(sentence);
 		for (String token:tokens){
@@ -249,11 +258,6 @@ public class ModelProcess {
 				vector[index] = 1;
 			}
 		}
-
-//		for (int i = 0; i < vector.length; i++) {
-//			System.err.print(vector[i] + " ");
-//		}
-//		System.err.println();
 
 		return vector;
 
@@ -278,9 +282,7 @@ public class ModelProcess {
 				String word = tokens[1];
 				vocabulary.put(word, index);
 			}
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (NumberFormatException | IOException e) {
 			e.printStackTrace();
 		}
 		return vocabulary;
@@ -307,11 +309,31 @@ public class ModelProcess {
 	}
 	
 	
-	//
+	//将句子对应成模板问题
 	public String queryExtenstion(String strPatt) {
-		return null;
+
+		String extendedsQuery = "";
+
+		for (Map.Entry<String,AbstractWordEnum> entry : abstrctWords.entrySet()){
+
+			/**
+			 * 找出模板中存在的抽象词，并用真实值替代还原语句  nm -> Jay Chou
+			 */
+			if (strPatt.contains(entry.getValue().getNature())){
+
+				extendedsQuery = strPatt.replace(entry.getValue().getNature(),entry.getKey());
+			}
+		}
+
+		/**
+		 * 置空abstrctWords
+		 */
+		abstrctWords.clear();
+		abstrctWords = null;
+		return  extendedsQuery;
+
 	}
-	
+
 	
 	public NaiveBayesModel loadClassifierModel() throws IOException {
 
@@ -340,10 +362,14 @@ public class ModelProcess {
 		 */
 		String nmPapersQuestions = loadFile("/question/[0]nm_papers.txt");
 		sentences = nmPapersQuestions.split("`");
-
 		for (String sentence : sentences) {
-			System.err.println(sentence);
 			double[] array = sentenceToArrays(sentence);
+
+//			for (int i = 0; i < array.length; i++) {
+//				System.out.print(array[i] + " ");
+//			}
+//			System.out.println();
+
 			LabeledPoint train_one = new LabeledPoint(0.0, Vectors.dense(array));
 			train_list.add(train_one);
 		}
@@ -353,16 +379,14 @@ public class ModelProcess {
 		 */
 		String kwPapersQuestions = loadFile("/question/[1]kw_papers.txt");
 		sentences = kwPapersQuestions.split("`");
-
 		for (String sentence : sentences) {
-			System.err.println(sentence);
 			double[] array = sentenceToArrays(sentence);
 			LabeledPoint train_two = new LabeledPoint(1.0, Vectors.dense(array));
 			train_list.add(train_two);
 		}
 
 		/**
-		 * todo  继续添加其他问题模板
+		 * 继续添加其他问题模板
 		 * 2.0:
 		 */
 
