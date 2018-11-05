@@ -26,5 +26,7 @@ Spring-Boot + OpenNLP + Neo4j + Spark的朴素贝叶斯分类器实现石油相�
 了ner(named entity recognition),然后延申到机器学习的NLP,发现了很多成型的nlp项目(英文和国内的汉语都有)而且可以直接使用的。随便
 挑选了apache的OpenNLP拿来做人名识别。
  
+ 
+######  11.5更新 
 
 
